@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import RecipeForm from './components/RecipeForm';
 import RecipeCard from './components/RecipeCard';
-import RecipeDetail from './components/RecipeDetail'; // NUEVA IMPORTACIÓN
+import RecipeDetail from './components/RecipeDetail';
+import AiSuggestion from './components/AiSuggestion'; // Importar el nuevo componente
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -12,6 +13,7 @@ function App() {
   const [showForm, setShowForm] = useState(false);
   const [editingRecipe, setEditingRecipe] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [showAiSuggestion, setShowAiSuggestion] = useState(false); // Estado para mostrar el componente de IA
 
   const fetchRecipes = async () => {
     setLoading(true);
@@ -64,6 +66,20 @@ function App() {
     setEditingRecipe(null);
   };
 
+  // Manejar la sugerencia de la IA
+  const handleSuggestionReceived = (suggestion) => {
+    setEditingRecipe({
+      title: suggestion.title,
+      description: suggestion.description,
+      ingredients: '', // El usuario debe rellenar esto
+      instructions: suggestion.instructions,
+      category: 'Platos Fuertes', // Categoría por defecto
+      image_url: ''
+    });
+    setShowAiSuggestion(false);
+    setShowForm(true);
+  };
+
   return (
     <Router>
       <div className="App">
@@ -72,15 +88,21 @@ function App() {
             <img src="/melove-logo.png" alt="Melove Recetas Logo" className="app-logo" />
           </Link>
 
-          <button
-            onClick={() => {
-              setShowForm(true);
-              setEditingRecipe(null);
-              setSelectedCategory(null);
-            }}
-          >
-            Añadir Nueva Receta
-          </button>
+          <div className="header-buttons">
+            <button
+              onClick={() => {
+                setShowForm(true);
+                setEditingRecipe(null);
+                setSelectedCategory(null);
+                setShowAiSuggestion(false);
+              }}
+            >
+              Añadir Nueva Receta
+            </button>
+            <button onClick={() => setShowAiSuggestion(!showAiSuggestion)}>
+              {showAiSuggestion ? 'Ocultar Asistente IA' : 'Probar Asistente IA'}
+            </button>
+          </div>
 
           <div className="categories-bar">
             <span
@@ -126,6 +148,8 @@ function App() {
           <Routes>
             <Route path="/" element={
               <>
+                {showAiSuggestion && <AiSuggestion onSuggestionReceived={handleSuggestionReceived} />}
+
                 {showForm && (
                   <RecipeForm
                     recipe={editingRecipe}
