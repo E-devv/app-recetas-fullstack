@@ -7,29 +7,29 @@
   --light-green: #e8f5e8;        /* Verde muy claro elegante */
   --accent-green: #20c997;       /* Verde azulado moderno */
   --dark-green: #1e7e34;         /* Verde oscuro elegante */
-  
+
   /* Colores de texto */
   --text-dark: #2c3e50;         /* Azul oscuro elegante */
   --text-light: #ffffff;         /* Blanco puro */
   --text-muted: #6c757d;         /* Gris medio para texto secundario */
-  
+
   /* Colores de fondo */
   --page-background: #f8faf9;    /* Fondo verde muy claro */
   --card-background: #ffffff;    /* Fondo de tarjetas */
   --header-background: #28a745;  /* Fondo del header verde */
-  
+
   /* Colores de borde y sombras */
   --border-color: #d1ecf1;       /* Borde azul claro */
   --border-light: #e9ecef;       /* Borde muy claro */
   --shadow-light: rgba(40, 167, 69, 0.08);
   --shadow-medium: rgba(40, 167, 69, 0.12);
   --shadow-strong: rgba(40, 167, 69, 0.18);
-  
+
   /* Colores de estado */
   --success-color: #28a745;      /* Verde para éxito */
   --error-color: #dc3545;        /* Rojo para errores */
   --warning-color: #ffc107;      /* Amarillo para advertencias */
-  
+
   /* Gradientes modernos con tu paleta verde */
   --gradient-primary: linear-gradient(135deg, #28a745 0%, #20c997 100%);
   --gradient-header: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
@@ -712,115 +712,115 @@ body {
   .App {
     padding: 15px;
   }
-  
+
   .App-header {
     flex-direction: column;
     align-items: center;
     padding: 25px;
     border-radius: 16px;
   }
-  
+
   .App-header button {
     margin-top: 20px;
     width: 100%;
     padding: 14px 24px;
     font-size: 1em;
   }
-  
+
   .app-logo {
     height: 80px;
     margin-bottom: 20px;
   }
-  
+
   .categories-bar {
     justify-content: center;
     padding: 12px 15px;
     border-radius: 12px;
   }
-  
+
   .category-item {
     font-size: 0.85em;
     padding: 8px 14px;
     margin: 4px;
   }
-  
+
   .main-section-title {
     font-size: 2.2em;
     text-align: center;
     padding-left: 0;
   }
-  
+
   .main-section-title::after {
     left: 50%;
     transform: translateX(-50%);
   }
-  
+
   .recipes-list {
     grid-template-columns: 1fr;
     gap: 25px;
     padding: 20px;
     border-radius: 16px;
   }
-  
+
   .recipe-card {
     padding: 20px;
     border-radius: 12px;
   }
-  
+
   .recipe-card h2 {
     font-size: 1.6em;
   }
-  
+
   .recipe-card h3 {
     font-size: 1.1em;
   }
-  
+
   .recipe-header-content {
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
-  
+
   .recipe-header-content .recipe-image {
     width: 100%;
     height: 200px;
   }
-  
+
   .recipe-description-area {
     text-align: center;
   }
-  
+
   .recipe-description-area h2, .recipe-description-area p {
     text-align: center;
   }
-  
+
   .recipe-card h3 {
     text-align: center;
   }
-  
+
   .recipe-card h3::after {
     left: 50%;
     transform: translateX(-50%);
   }
-  
+
   .recipe-form-container {
     padding: 25px;
     margin: 25px auto;
     border-radius: 16px;
   }
-  
+
   .recipe-form-container h2 {
     font-size: 1.8em;
   }
-  
+
   .recipe-form-container h2::after {
     width: 60px;
   }
-  
+
   .recipe-form-container label {
     font-size: 1em;
   }
-  
+
   .recipe-form-container input,
   .recipe-form-container textarea,
   .recipe-form-container select {
@@ -828,50 +828,50 @@ body {
     font-size: 0.95em;
     border-radius: 10px;
   }
-  
+
   .recipe-form-container .button-group-form {
     flex-direction: column;
     gap: 15px;
   }
-  
+
   .recipe-form-container button {
     width: 100%;
     padding: 14px 24px;
   }
-  
+
   .recipe-detail-container {
     padding: 25px;
     margin: 25px auto;
     border-radius: 16px;
   }
-  
+
   .recipe-detail-header {
     flex-direction: column;
     align-items: center;
     text-align: center;
     gap: 25px;
   }
-  
+
   .recipe-detail-image {
     width: 100%;
     height: 300px;
   }
-  
+
   .recipe-detail-info h1 {
     font-size: 2.5em;
     text-align: center;
   }
-  
+
   .recipe-detail-info p {
     font-size: 1.1em;
     text-align: center;
   }
-  
+
   .recipe-detail-content h2 {
     font-size: 1.8em;
     text-align: center;
   }
-  
+
   .recipe-detail-content h2::after {
     left: 50%;
     transform: translateX(-50%);
@@ -919,4 +919,59 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-green);
+}
+
+/* Estilos para el componente de sugerencias de IA */
+.ai-suggestion-container {
+  background-color: #eef8ff;
+  border: 1px solid #cce5ff;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 800px;
+  text-align: center;
+}
+
+.ai-suggestion-container h3 {
+  color: #004085;
+  margin-top: 0;
+}
+
+.ai-suggestion-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.ai-suggestion-form input {
+  width: 60%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #b8daff;
+}
+
+.ai-suggestion-form button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.ai-suggestion-form button:hover {
+  background-color: #0056b3;
+}
+
+.ai-suggestion-form button:disabled {
+  background-color: #a0c3e6;
+  cursor: not-allowed;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
 }

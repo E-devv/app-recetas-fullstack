@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from app import db
 from app.models import Recipe
+from app.ai_service import get_ai_suggestion
 
 main = Blueprint('main', __name__)
 
@@ -35,6 +36,11 @@ def get_recipe(recipe_id):
 @main.route('/recipes', methods=['POST'])
 def add_recipe():
     data = request.json
+    # Validación de campos requeridos
+    required_fields = ['title', 'description', 'ingredients', 'instructions']
+    if not all(field in data and data[field] for field in required_fields):
+        return jsonify({"error": "Missing required fields"}), 400
+
     new_recipe = Recipe(
         title=data['title'],
         description=data['description'],
@@ -51,6 +57,17 @@ def add_recipe():
 def update_recipe(recipe_id):
     recipe = Recipe.query.get_or_404(recipe_id)
     data = request.json
+
+    # Validación de campos requeridos
+    if 'title' in data and not data['title']:
+        return jsonify({"error": "Title cannot be empty"}), 400
+    if 'description' in data and not data['description']:
+        return jsonify({"error": "Description cannot be empty"}), 400
+    if 'ingredients' in data and not data['ingredients']:
+        return jsonify({"error": "Ingredients cannot be empty"}), 400
+    if 'instructions' in data and not data['instructions']:
+        return jsonify({"error": "Instructions cannot be empty"}), 400
+
     recipe.title = data.get('title', recipe.title)
     recipe.description = data.get('description', recipe.description)
     recipe.ingredients = data.get('ingredients', recipe.ingredients)
@@ -66,3 +83,26 @@ def delete_recipe(recipe_id):
     db.session.delete(recipe)
     db.session.commit()
     return '', 204
+
+@main.route('/generate-suggestion', methods=['POST'])
+def generate_suggestion():
+    data = request.json
+    ingredients = data.get('ingredients')
+
+    if not ingredients:
+        return jsonify({"error": "Ingredients are required"}), 400
+
+    try:
+        suggestion = get_ai_suggestion(ingredients)
+        if suggestion is None:
+            return jsonify({"error": "AI service returned an empty response"}), 500
+
+        # Basic prompt injection mitigation
+        if any(keyword in ingredients.lower() for keyword in ["ignore", "instruction", "prompt"]):
+             return jsonify({"error": "Invalid input detected"}), 400
+
+        return jsonify(suggestion)
+    except Exception as e:
+        # Log the error for debugging
+        print(f"Error calling AI service: {e}")
+        return jsonify({"error": "Failed to get suggestion from AI service"}), 500
