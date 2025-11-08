@@ -174,8 +174,9 @@ flask drop-db
 
 2. **Crear entorno virtual**:
    ```bash
-   python -m venv venv
-   ```
+   Solicitud y Código de Error:
+   python -m venv venv 
+
 
 3. **Activar entorno virtual**:
    ```bash

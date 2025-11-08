@@ -4,7 +4,8 @@ import './App.css';
 import RecipeForm from './components/RecipeForm';
 import RecipeCard from './components/RecipeCard';
 import RecipeDetail from './components/RecipeDetail';
-import AiSuggestion from './components/AiSuggestion'; // Importar el nuevo componente
+import AiSuggestion from './components/AiSuggestion';
+import API_URL from './config'; // Importamos la configuración
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -13,12 +14,13 @@ function App() {
   const [showForm, setShowForm] = useState(false);
   const [editingRecipe, setEditingRecipe] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [showAiSuggestion, setShowAiSuggestion] = useState(false); // Estado para mostrar el componente de IA
+  const [showAiSuggestion, setShowAiSuggestion] = useState(false);
 
   const fetchRecipes = async () => {
     setLoading(true);
     try {
-      let url = 'http://localhost:5000/recipes';
+      // Usamos API_URL aquí
+      let url = `${API_URL}/recipes`;
       if (selectedCategory) {
         url += `?category=${encodeURIComponent(selectedCategory)}`;
       }
@@ -71,9 +73,9 @@ function App() {
     setEditingRecipe({
       title: suggestion.title,
       description: suggestion.description,
-      ingredients: '', // El usuario debe rellenar esto
+      ingredients: '',
       instructions: suggestion.instructions,
-      category: 'Platos Fuertes', // Categoría por defecto
+      category: 'Platos Fuertes',
       image_url: ''
     });
     setShowAiSuggestion(false);

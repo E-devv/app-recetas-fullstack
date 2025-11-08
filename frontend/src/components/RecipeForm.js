@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_URL from '../config'; // Importamos la configuración
 
 function RecipeForm({ recipe, onRecipeAdded, onRecipeUpdated, onCancel }) {
   const [title, setTitle] = useState('');
@@ -10,12 +11,10 @@ function RecipeForm({ recipe, onRecipeAdded, onRecipeUpdated, onCancel }) {
   const [statusMessage, setStatusMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
 
-  // Lista de categorías para el menú desplegable
   const categories = ['Postres', 'Platos Fuertes', 'Desayunos', 'Ensaladas', 'Bebidas'];
 
   useEffect(() => {
     if (recipe) {
-      // Modo de Edición
       setTitle(recipe.title);
       setDescription(recipe.description);
       setIngredients(recipe.ingredients);
@@ -23,12 +22,11 @@ function RecipeForm({ recipe, onRecipeAdded, onRecipeUpdated, onCancel }) {
       setCategory(recipe.category || '');
       setImageUrl(recipe.image_url || '');
     } else {
-      // Modo de Añadir: Inicializa el campo de categoría con la primera opción de la lista
       setTitle('');
       setDescription('');
       setIngredients('');
       setInstructions('');
-      setCategory(categories[0]); // Selecciona la primera categoría por defecto
+      setCategory(categories[0]);
       setImageUrl('');
     }
     setStatusMessage('');
@@ -37,7 +35,6 @@ function RecipeForm({ recipe, onRecipeAdded, onRecipeUpdated, onCancel }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Asegúrate de que la categoría esté seleccionada
     if (!category) {
         setStatusMessage('Por favor, selecciona una categoría.');
         setIsSuccess(false);
@@ -56,8 +53,8 @@ function RecipeForm({ recipe, onRecipeAdded, onRecipeUpdated, onCancel }) {
     try {
       let response;
       if (recipe) {
-        // Modo de Edición
-        response = await fetch(`http://localhost:5000/recipes/${recipe.id}`, {
+        // Usamos API_URL aquí para PUT
+        response = await fetch(`${API_URL}/recipes/${recipe.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -65,8 +62,8 @@ function RecipeForm({ recipe, onRecipeAdded, onRecipeUpdated, onCancel }) {
           body: JSON.stringify(recipeData),
         });
       } else {
-        // Modo de Añadir
-        response = await fetch('http://localhost:5000/recipes', {
+        // Usamos API_URL aquí para POST
+        response = await fetch(`${API_URL}/recipes`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -134,7 +131,6 @@ function RecipeForm({ recipe, onRecipeAdded, onRecipeUpdated, onCancel }) {
             required
           />
         </label>
-        {/* NUEVO: Campo de categoría con select desplegable */}
         <label>
           Categoría:
           <select value={category} onChange={(e) => setCategory(e.target.value)} required>
@@ -144,7 +140,6 @@ function RecipeForm({ recipe, onRecipeAdded, onRecipeUpdated, onCancel }) {
             ))}
           </select>
         </label>
-        {/* Fin del nuevo campo */}
         <label>
           URL de la Imagen (opcional):
           <input

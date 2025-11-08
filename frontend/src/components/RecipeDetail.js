@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import '../App.css';
+import API_URL from '../config'; // Importamos la configuración
 
 function RecipeDetail() {
     const { id } = useParams();
@@ -11,7 +12,8 @@ function RecipeDetail() {
     useEffect(() => {
         const fetchRecipe = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/recipes/${id}`);
+                // Usamos API_URL aquí
+                const response = await fetch(`${API_URL}/recipes/${id}`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }

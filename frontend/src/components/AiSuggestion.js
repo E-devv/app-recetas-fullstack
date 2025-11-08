@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import API_URL from '../config'; // Importamos la configuración
 
 function AiSuggestion({ onSuggestionReceived }) {
   const [ingredients, setIngredients] = useState('');
@@ -10,7 +11,8 @@ function AiSuggestion({ onSuggestionReceived }) {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:5000/generate-suggestion', {
+      // Usamos API_URL aquí
+      const response = await fetch(`${API_URL}/generate-suggestion`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
